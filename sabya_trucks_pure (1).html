@@ -1,0 +1,402 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<style>
+    @page {
+        size: A4;
+        margin: 10mm;
+        background-color: #f8fafc;
+        @bottom-left {
+            content: "صفحة " counter(page) " من " counter(pages);
+            font-family: 'Cairo', 'Tahoma', sans-serif;
+            font-size: 8pt;
+            color: #64748b;
+        }
+        @bottom-right {
+            content: "شركة أصول البناء - موقع صبيا 1";
+            font-family: 'Cairo', 'Tahoma', sans-serif;
+            font-size: 8pt;
+            color: #64748b;
+        }
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Cairo', 'Tahoma', Arial, sans-serif;
+        color: #1e293b;
+        margin: 0;
+        padding: 0;
+        background-color: #f8fafc;
+        direction: rtl;
+        text-align: right;
+    }
+
+    .header-card {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+        color: white;
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-card h1 {
+        margin: 0 0 6px 0;
+        font-size: 16pt;
+        font-weight: 700;
+    }
+
+    .meta-grid {
+        display: table;
+        width: 100%;
+        margin-top: 6px;
+        font-size: 9pt;
+    }
+
+    .meta-row {
+        display: table-row;
+    }
+
+    .meta-cell {
+        display: table-cell;
+        padding: 3px 6px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 4px;
+    }
+
+    .controls-bar {
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .btn {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: 'Cairo', sans-serif;
+        font-size: 9.5pt;
+        font-weight: bold;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .btn:hover {
+        background-color: #1d4ed8;
+    }
+
+    .btn-success {
+        background-color: #16a34a;
+    }
+    .btn-success:hover {
+        background-color: #15803d;
+    }
+
+    .section-title {
+        font-size: 11pt;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin: 10px 0 6px 0;
+        border-right: 4px solid #3b82f6;
+        padding-right: 6px;
+    }
+
+    .truck-card {
+        background: white;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin-bottom: 10px;
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .truck-header {
+        display: table;
+        width: 100%;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 5px;
+        margin-bottom: 6px;
+    }
+
+    .truck-title {
+        display: table-cell;
+        font-size: 10.5pt;
+        font-weight: bold;
+        color: #0f172a;
+    }
+
+    .truck-id {
+        display: table-cell;
+        text-align: left;
+        font-size: 8.5pt;
+        color: #64748b;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 6px;
+        font-size: 8.5pt;
+    }
+
+    .data-table th, .data-table td {
+        border: 1px solid #cbd5e1;
+        padding: 4px 6px;
+        text-align: right;
+    }
+
+    .data-table th {
+        background-color: #f1f5f9;
+        color: #334155;
+        font-weight: 600;
+        width: 22%;
+    }
+
+    .data-table td {
+        background-color: #ffffff;
+        color: #0f172a;
+    }
+
+    input[type="text"], input[type="date"], input[type="time"], select {
+        width: 100%;
+        border: none;
+        background: transparent;
+        font-family: 'Cairo', sans-serif;
+        font-size: 8.5pt;
+        color: #0f172a;
+        outline: none;
+    }
+
+    .input-box {
+        border: 1px solid #cbd5e1;
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-family: 'Cairo', sans-serif;
+        font-size: 8.5pt;
+        background: #f8fafc;
+    }
+
+    .image-section {
+        margin-top: 4px;
+    }
+
+    .image-label {
+        font-size: 8pt;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 2px;
+    }
+
+    .preview-container {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .delete-btn {
+        background-color: #ef4444;
+        color: white;
+        border: none;
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 8pt;
+        font-family: 'Cairo', sans-serif;
+    }
+    .delete-btn:hover {
+        background-color: #dc2626;
+    }
+
+    @media print {
+        .controls-bar, .delete-btn {
+            display: none !important;
+        }
+        body {
+            background-color: white;
+        }
+        .truck-card {
+            break-inside: avoid;
+            border: 1px solid #94a3b8;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="header-card">
+        <h1>سجل حركة الشاحنات الناقلة للمخلفات</h1>
+        <div class="meta-grid">
+            <div class="meta-row">
+                <div class="meta-cell"><b>الموقع:</b> صبيا 1</div>
+                <div class="meta-cell"><b>الشركة المالكة / المشرفة:</b> أصول البناء</div>
+                <div class="meta-cell"><b>شركة المقاولات (الناقلة):</b> شركة المخلفات</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls-bar" id="controlsBar">
+        <div style="font-size: 9pt; color: #1e40af; font-weight: bold;">
+            💡 يتم إضافة التاريخ، اليوم، والوقت تلقائياً عند إضافة شاحنة جديدة. يمكنك إرفاق الصور والطباعة مباشرة.
+        </div>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-success" onclick="addTruck()">➕ إضافة شاحنة جديدة</button>
+            <button class="btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+        </div>
+    </div>
+
+    <div class="section-title">قائمة الشاحنات المسجلة</div>
+
+    <div id="trucksContainer">
+        <!-- الشاحنة الأولى تضاف افتراضياً مع التاريخ والوقت الحالي -->
+    </div>
+
+<script>
+const daysAr = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+let truckCount = 0;
+
+function getCurrentDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const dayNum = String(now.getDate()).padStart(2, '0');
+    const dateString = `${year}-${month}-${dayNum}`;
+    const dayName = daysAr[now.getDay()];
+    const timeString = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    return { date: dateString, day: dayName, time: timeString };
+}
+
+function addTruck() {
+    truckCount++;
+    const container = document.getElementById('trucksContainer');
+    const truckId = 'truck-' + truckCount;
+    const dt = getCurrentDateTime();
+    
+    // محاولة جلب آخر القيم المدخلة للحارس والمشرف إن وجدت لتسهيل التكرار
+    let prevGuard = "";
+    let prevSupervisor = "";
+    let prevShift = "صباحي";
+    
+    const cards = container.querySelectorAll('.truck-card');
+    if (cards.length > 0) {
+        const lastCard = cards[cards.length - 1];
+        prevGuard = lastCard.querySelector('.inp-guard').value;
+        prevSupervisor = lastCard.querySelector('.inp-supervisor').value;
+        prevShift = lastCard.querySelector('.inp-shift').value;
+    }
+
+    const div = document.createElement('div');
+    div.className = 'truck-card';
+    div.id = truckId;
+    div.innerHTML = `
+        <div class="truck-header">
+            <div class="truck-title">الشاحنة رقم (# <span class="truck-num">${truckCount}</span>)</div>
+            <div class="truck-id" style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap;">
+                التاريخ: <input type="date" class="input-box inp-date" style="width: 105px;" value="${dt.date}"> 
+                اليوم: <input type="text" class="input-box inp-day" style="width: 65px;" value="${dt.day}">
+                الوقت: <input type="time" class="input-box inp-time" style="width: 85px;" value="${dt.time}">
+                <button class="delete-btn" onclick="removeTruck('${truckId}')">حذف</button>
+            </div>
+        </div>
+        
+        <table class="data-table">
+            <tr>
+                <th>رقم اللوحة / الشاحنة</th>
+                <td><input type="text" class="inp-plate" placeholder="أدخل رقم اللوحة"></td>
+                <th>الوردية (صباحي / مسائي)</th>
+                <td>
+                    <select class="inp-shift">
+                        <option value="صباحي" ${prevShift === 'صباحي' ? 'selected' : ''}>صباحي</option>
+                        <option value="مسائي" ${prevShift === 'مسائي' ? 'selected' : ''}>مسائي</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>نوع المخلفات المنقولة</th>
+                <td><input type="text" class="inp-waste" placeholder="نوع المخلفات"></td>
+                <th>حارس أمن البوابه</th>
+                <td><input type="text" class="inp-guard" placeholder="اسم حارس الأمن" value="${prevGuard}"></td>
+            </tr>
+            <tr>
+                <th>المشرف المستلم</th>
+                <td><input type="text" class="inp-supervisor" placeholder="اسم المشرف المستلم" value="${prevSupervisor}"></td>
+                <th>ملاحظات إضافية</th>
+                <td><input type="text" class="inp-notes" placeholder="ملاحظات"></td>
+            </tr>
+        </table>
+
+        <div class="image-section">
+            <div class="image-label">إرفاق صورة الشاحنة:</div>
+            <div class="preview-container">
+                <input type="file" accept="image/*" onchange="previewImage(event)" style="font-size: 8pt;">
+            </div>
+            <div class="img-preview-box" style="margin-top: 5px; max-width: 150px;"></div>
+        </div>
+    `;
+    container.appendChild(div);
+    updateTruckNumbers();
+}
+
+function removeTruck(id) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.remove();
+        updateTruckNumbers();
+    }
+    // إذا تم حذف الكل، أضف شاحنة جديدة فارغة
+    if (document.querySelectorAll('.truck-card').length === 0) {
+        addTruck();
+    }
+}
+
+function updateTruckNumbers() {
+    const cards = document.querySelectorAll('.truck-card');
+    cards.forEach((card, index) => {
+        const numSpan = card.querySelector('.truck-num');
+        if (numSpan) {
+            numSpan.textContent = index + 1;
+        }
+    });
+}
+
+function previewImage(event) {
+    const input = event.target;
+    const previewBox = input.closest('.image-section').querySelector('.img-preview-box');
+    previewBox.innerHTML = '';
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '120px';
+            img.style.borderRadius = '4px';
+            img.style.border = '1px solid #cbd5e1';
+            previewBox.appendChild(img);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// إضافة الشاحنة الأولى تلقائياً عند فتح الصفحة
+window.addEventListener('DOMContentLoaded', () => {
+    addTruck();
+});
+</script>
+
+</body>
+</html>
